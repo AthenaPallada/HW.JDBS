@@ -1,3 +1,7 @@
+package dao;
+
+import model.Employee;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -9,7 +13,7 @@ public interface EmployeeDAO {
 
     List<Employee> readAll();
 
-    void updateAmountById(int id, int age);
+    void updateById(int id,  String firstName, String lastName, String gender, int age);
 
     void deleteById(int id);
 }

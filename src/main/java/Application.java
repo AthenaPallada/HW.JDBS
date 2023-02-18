@@ -1,3 +1,8 @@
+import dao.EmployeeDAO;
+import dao.EmployeeDaoImpl;
+import model.City;
+import model.Employee;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,21 +17,19 @@ public class Application {
         City city1 = new City(4, "London");
         Employee employee1 = new Employee("Polumna", "Lovegood", "female", 20, city1);
 
-        City city2 = new City(5, "Новочебоксарск");
-        Employee employee2 = new Employee("Татьяна", "Алексеева", "female", 22, city2);
+        City city2 = new City(5, "Новочик");
+        Employee employee2 = new Employee("Мая", "Алиева", "female", 13, city2);
 
-        employeeDAO.create(employee1);
-        employeeDAO.create(employee2);
+//        employeeDAO.create(employee1);
+//        employeeDAO.create(employee2);
 
         List<Employee> list = new ArrayList<>(employeeDAO.readAll());
         for (Employee book : list) {
             System.out.println(book);
         }
 
-        employeeDAO.updateAmountById(33, 40);
+        employeeDAO.updateById(34, "Sofia", "Sunrise", "female", 33);
 
-        System.out.println(employeeDAO.readById(33));
-        employeeDAO.deleteById(55);
         employeeDAO.deleteById(32);
 
 
@@ -39,7 +42,7 @@ public class Application {
                 String firstName = "First_name: " + resultSet.getString("first_name");
                 String lastName = "Last_name: " + resultSet.getString("last_name");
                 String gender = "Gender: " + resultSet.getString("gender");
-                String city = "City: " + resultSet.getString("city_name");
+                String city = "model.City: " + resultSet.getString("city_name");
                 int age = resultSet.getInt(4);
 
                 System.out.println(firstName);
