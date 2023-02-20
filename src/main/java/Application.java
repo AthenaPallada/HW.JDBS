@@ -14,43 +14,44 @@ public class Application {
         final String url = "jdbc:postgresql://localhost:5432/skypro";
 
         EmployeeDAO employeeDAO = new EmployeeDaoImpl();
-        City city1 = new City(4, "London");
-        Employee employee1 = new Employee("Polumna", "Lovegood", "female", 20, city1);
+        Employee employee1 = new Employee(1,"Polumna", "Lovegood", "female", 27, 4);
+        Employee employee2 = new Employee(2,"Мая", "Алиева", "female", 13, 3);
 
-        City city2 = new City(5, "Новочик");
-        Employee employee2 = new Employee("Мая", "Алиева", "female", 13, city2);
+        employeeDAO.create(employee1);
+        employeeDAO.create(employee2);
 
-        System.out.println(employeeDAO.readById(34));
-
-//        employeeDAO.create(employee1);
-//        employeeDAO.create(employee2);
-
-        List<Employee> list = new ArrayList<>(employeeDAO.readAll());
+        System.out.println(employeeDAO.readById(1));
+        List<Employee> list = employeeDAO.readAll();
         for (Employee book : list) {
             System.out.println(book);
         }
 
-        employeeDAO.updateById(34, "Sofia", "Sunrise", "female", 33);
-        employeeDAO.deleteById(32);
+        employeeDAO.updateById(employee1);
+        employeeDAO.deleteById(employee1);
+        employeeDAO.deleteById(employee2);
 
 
-        try (final Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name, gender, age, city_name FROM employee INNER JOIN city ON employee.id = city.city_id  WHERE id = (?)")) {
-            statement.setInt(1, 3);
-            final ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                String firstName = "First_name: " + resultSet.getString("first_name");
-                String lastName = "Last_name: " + resultSet.getString("last_name");
-                String gender = "Gender: " + resultSet.getString("gender");
-                String city = "City: " + resultSet.getString("city_name");
-                int age = resultSet.getInt(4);
 
-                System.out.println(firstName);
-                System.out.println(lastName);
-                System.out.println(gender);
-                System.out.println(city);
-                System.out.println("Age: " + age);
-            }
-        }
+
+
+//
+//        try (final Connection connection = DriverManager.getConnection(url, user, password);
+//            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name, gender, age, city_name FROM employee INNER JOIN city ON employee.id = city.city_id  WHERE id = (?)")) {
+//            statement.setInt(1, 3);
+//            final ResultSet resultSet = statement.executeQuery();
+//            while (resultSet.next()) {
+//                String firstName = "First_name: " + resultSet.getString("first_name");
+//                String lastName = "Last_name: " + resultSet.getString("last_name");
+//                String gender = "Gender: " + resultSet.getString("gender");
+//                String city = "City: " + resultSet.getString("city_name");
+//                int age = resultSet.getInt(4);
+//
+//                System.out.println(firstName);
+//                System.out.println(lastName);
+//                System.out.println(gender);
+//                System.out.println(city);
+//                System.out.println("Age: " + age);
+//            }
+//        }
     }
 }
