@@ -20,6 +20,8 @@ public class Application {
         City city2 = new City(5, "Новочик");
         Employee employee2 = new Employee("Мая", "Алиева", "female", 13, city2);
 
+        System.out.println(employeeDAO.readById(34));
+
 //        employeeDAO.create(employee1);
 //        employeeDAO.create(employee2);
 
@@ -29,20 +31,18 @@ public class Application {
         }
 
         employeeDAO.updateById(34, "Sofia", "Sunrise", "female", 33);
-
         employeeDAO.deleteById(32);
 
 
         try (final Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name, gender, age, city_name FROM employee INNER JOIN city ON employee.id = city.city_id WHERE id = (?)")) {
+            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name, gender, age, city_name FROM employee INNER JOIN city ON employee.id = city.city_id  WHERE id = (?)")) {
             statement.setInt(1, 3);
             final ResultSet resultSet = statement.executeQuery();
-
             while (resultSet.next()) {
                 String firstName = "First_name: " + resultSet.getString("first_name");
                 String lastName = "Last_name: " + resultSet.getString("last_name");
                 String gender = "Gender: " + resultSet.getString("gender");
-                String city = "model.City: " + resultSet.getString("city_name");
+                String city = "City: " + resultSet.getString("city_name");
                 int age = resultSet.getInt(4);
 
                 System.out.println(firstName);
