@@ -1,5 +1,8 @@
 import dao.EmployeeDAO;
 import dao.EmployeeDaoImpl;
+import dao.CityDAO;
+import dao.CityDAOImpl;
+
 import model.City;
 import model.Employee;
 
@@ -14,44 +17,35 @@ public class Application {
         final String url = "jdbc:postgresql://localhost:5432/skypro";
 
         EmployeeDAO employeeDAO = new EmployeeDaoImpl();
-        Employee employee1 = new Employee(1,"Polumna", "Lovegood", "female", 27, 4);
-        Employee employee2 = new Employee(2,"Мая", "Алиева", "female", 13, 3);
+//        Employee employee1 = new Employee(1,"Polumna", "Lovegood", "female", 27, 4);
+//        Employee employee2 = new Employee(2,"Мая", "Алиева", "female", 13, 3);
+//
+//        employeeDAO.create(employee1);
+//        employeeDAO.create(employee2);
+//
+//        System.out.println(employeeDAO.readById(1));
+//        List<Employee> list = employeeDAO.readAll();
+//        for (Employee book : list) {
+//            System.out.println(book);
+//        }
+//
+//        employeeDAO.updateById(employee1);
+//        employeeDAO.deleteById(employee1);
+//        employeeDAO.deleteById(employee2);
 
-        employeeDAO.create(employee1);
-        employeeDAO.create(employee2);
-
-        System.out.println(employeeDAO.readById(1));
-        List<Employee> list = employeeDAO.readAll();
-        for (Employee book : list) {
-            System.out.println(book);
+        CityDAO cityDAO = new CityDAOImpl();
+        City city = new City("Санкт-Петербург");
+        cityDAO.create(city);
+        Employee employee = new Employee("Светлана", "Суркова", "female", 23, city);
+        City city1 = cityDAO.getById(1);
+        employee.setCity(city1);
+        employeeDAO.create(employee);
+        cityDAO.delete(city);
+        List<City> list1 = cityDAO.getAllCities();
+        for (City book : list1) {
+           System.out.println(book);
         }
 
-        employeeDAO.updateById(employee1);
-        employeeDAO.deleteById(employee1);
-        employeeDAO.deleteById(employee2);
 
-
-
-
-
-//
-//        try (final Connection connection = DriverManager.getConnection(url, user, password);
-//            PreparedStatement statement = connection.prepareStatement("SELECT first_name, last_name, gender, age, city_name FROM employee INNER JOIN city ON employee.id = city.city_id  WHERE id = (?)")) {
-//            statement.setInt(1, 3);
-//            final ResultSet resultSet = statement.executeQuery();
-//            while (resultSet.next()) {
-//                String firstName = "First_name: " + resultSet.getString("first_name");
-//                String lastName = "Last_name: " + resultSet.getString("last_name");
-//                String gender = "Gender: " + resultSet.getString("gender");
-//                String city = "City: " + resultSet.getString("city_name");
-//                int age = resultSet.getInt(4);
-//
-//                System.out.println(firstName);
-//                System.out.println(lastName);
-//                System.out.println(gender);
-//                System.out.println(city);
-//                System.out.println("Age: " + age);
-//            }
-//        }
     }
 }
