@@ -17,6 +17,11 @@ public class City {
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
     private List<Employee>employees;
 
+    public City(int cityId,String cityName) {
+        this.cityId = cityId;
+        this.cityName = cityName;
+    }
+
     public City(String cityName) {
         this.cityName = cityName;
     }
@@ -63,7 +68,7 @@ public class City {
 
     @Override
     public String toString() {
-        return "model.City{" +
+        return "model.City " +
                 "cityId=" + cityId +
                 ", cityName=" + cityName +
                 '}';

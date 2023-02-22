@@ -2,6 +2,7 @@ package dao;
 
 import Hibernate.HibernateSessionFactoryUtil;
 
+import model.City;
 import model.Employee;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,14 +22,16 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
     @Override
     public Employee readById(int id) {
-        return HibernateSessionFactoryUtil.getSessionFactory().openSession().get(Employee.class, id);
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.get(Employee.class, id);
+        }
     }
 
     @Override
     public List<Employee> readAll() {
-        List<Employee> employeeList = (List<Employee>)  HibernateSessionFactoryUtil
-                .getSessionFactory().openSession().createQuery("From Employee").list();
-        return employeeList;
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+            return session.createQuery("FROM Employee", Employee.class).list();
+        }
     }
 
     @Override
